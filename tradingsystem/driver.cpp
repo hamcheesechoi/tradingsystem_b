@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <exception>
 
@@ -43,7 +44,7 @@ public:
 
 	};
 
-	/**<TEST ½Ã ÇÊ¿ä ÇÑ ÇÔ¼ö Ãß°¡ÇÕ´Ï´Ù.>**/
+	/**<TEST ???„ìš” ???¨ìˆ˜ ì¶”ê??©ë‹ˆ??>**/
 	TestDriver(string ID, string pass) : _ID(ID), _pass(pass) {}
 
 	void setStockCode(string stockCode) {
@@ -54,9 +55,9 @@ public:
 		return this->_count;
 	}
 private:
-	string _ID; // ÀÌÈÄ vector·Î °ü¸® ÇÊ¿ä
-	string _pass; // ÀÌÈÄ vector·Î °ü¸® ÇÊ¿ä
-	string _stockCode; // ÀÌÈÄ vector·Î °ü¸® ÇÊ¿ä
+	string _ID; // ?´í›„ vectorë¡?ê´€ë¦??„ìš”
+	string _pass; // ?´í›„ vectorë¡?ê´€ë¦??„ìš”
+	string _stockCode; // ?´í›„ vectorë¡?ê´€ë¦??„ìš”
 
-	int _count; // ¼ö·®
+	int _count; // ?˜ëŸ‰
 };
