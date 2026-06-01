@@ -61,6 +61,7 @@ public:
 
 	void SetUp() {
 		td.setBroker("nemo");
+		// td.setBroker("kiwer");
 	}
 };
 
@@ -95,6 +96,7 @@ TEST_F(DriverTestFixture, StockError) {
 	EXPECT_THROW(td.currentPrice(stockCode, munute), StockExcpetion) << "Stock Error";
 }
 
+/*
 // 4. stock 잔여량 에러
 TEST_F(DriverTestFixture, RemainStockError) {
 
@@ -105,7 +107,7 @@ TEST_F(DriverTestFixture, RemainStockError) {
 }
 
 
-/************<Success Case>*************/
+// <Success Case>
 // 1. sell
 TEST_F(DriverTestFixture, sellSuccess) {
 	string stockCode = "STOCK_CODE";
@@ -117,7 +119,6 @@ TEST_F(DriverTestFixture, sellSuccess) {
 }
 
 // 2. current Price (app test 개발 후 테스트 필요)
-/*
 TEST_F(DriverTestFixture, sellSuccess) {
 	string stockCode = "STOCK_CODE";
 
