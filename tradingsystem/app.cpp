@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include <string>
 #include <array>
 #include <queue>
@@ -7,7 +6,7 @@
 #include <numeric>
 #include <algorithm>
 #include "driver.cpp"
-
+#include <iostream>
 
 using std::string, std::priority_queue;
 
