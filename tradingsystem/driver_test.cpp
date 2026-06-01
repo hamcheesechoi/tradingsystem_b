@@ -91,36 +91,6 @@ TEST_F(DriverTestFixture, StockError) {
 	EXPECT_THROW(td.currentPrice(stockCode, munute), StockExcpetion) << "Stock Error";
 }
 
-/*
-// 4. stock 잔여량 에러
-TEST_F(DriverTestFixture, RemainStockError) {
-
-	string stockCode = "STOCK_CODE";
-	td.buy(stockCode, 0, 3);
-
-	EXPECT_THROW(td.sell(stockCode, 0, 4), NotAvailableSellExcpetion);
-}
-
-
-// <Success Case>
-// 1. sell
-TEST_F(DriverTestFixture, sellSuccess) {
-	string stockCode = "STOCK_CODE";
-	td.buy(stockCode, 0, 3);
-
-	td.sell(stockCode, 0, 2);
-
-	EXPECT_EQ(td.getStockCount(stockCode), 1);
-}
-
-// 2. current Price (app test 개발 후 테스트 필요)
-TEST_F(DriverTestFixture, sellSuccess) {
-	string stockCode = "STOCK_CODE";
-
-	EXPECT_EQ(td.currentPrice(stockCode, 3), 200);
-}
-*/
-
 // ===================== KiwerAPI Unit Test =====================
 #include "kiwer_api.cpp"
 
