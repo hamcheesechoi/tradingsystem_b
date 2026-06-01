@@ -1,12 +1,12 @@
 #pragma once
 #include <string>
-#include <array>
-#include <queue>
 #include <vector>
 #include <numeric>
 #include <algorithm>
 #include "driver.cpp"
 #include <iostream>
+#include <array>
+#include <queue>
 
 using std::string, std::priority_queue;
 
