@@ -1,6 +1,8 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include <vector>
+#include <numeric>
+#include <algorithm>
 #include "driver.cpp"
 using std::string;
 
@@ -26,10 +28,19 @@ public:
 
 class MovingAverageStrategy : public ITimingStrategy {
 public:
-    // TODO: prices.back() > average(prices) 이면 매수
-    bool shouldBuy(const PriceHistory& prices) override { return false; }
-    // TODO: prices.back() < average(prices) 이면 매도
-    bool shouldSell(const PriceHistory& prices) override { return false; }
+    // prices.back() > average(prices) 이면 매수
+    bool shouldBuy(const PriceHistory& prices) override {
+        return prices.back() > average(prices);
+    }
+    // prices.back() < average(prices) 이면 매도
+    bool shouldSell(const PriceHistory& prices) override {
+        return prices.back() < average(prices);
+    }
+private:
+    double average(const PriceHistory& prices) const {
+        long long sum = std::accumulate(prices.begin(), prices.end(), 0LL);
+        return static_cast<double>(sum) / prices.size();
+    }
 };
 
 class BreakoutStrategy : public ITimingStrategy {
@@ -37,10 +48,16 @@ class BreakoutStrategy : public ITimingStrategy {
 public:
     BreakoutStrategy(int n) : n(n) {}
     int requiredHistory() const override { return n + 1; }
-    // TODO: prices.back() > max(prices[0..n-1]) 이면 매수
-    bool shouldBuy(const PriceHistory& prices) override { return false; }
-    // TODO: prices.back() < min(prices[0..n-1]) 이면 매도
-    bool shouldSell(const PriceHistory& prices) override { return false; }
+    // prices.back() > max(prices[0..n-1]) 이면 매수
+    bool shouldBuy(const PriceHistory& prices) override {
+        int highest = *std::max_element(prices.begin(), prices.begin() + n);
+        return prices.back() > highest;
+    }
+    // prices.back() < min(prices[0..n-1]) 이면 매도
+    bool shouldSell(const PriceHistory& prices) override {
+        int lowest = *std::min_element(prices.begin(), prices.begin() + n);
+        return prices.back() < lowest;
+    }
 };
 
 class auto_trading_system {
