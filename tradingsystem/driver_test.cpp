@@ -161,3 +161,24 @@ TEST_F(DriverTestFixture, NemoSellOK) {
 	td.sell("STOCK", 10, 3);
 	EXPECT_EQ(expected, getResult());
 }
+
+TEST_F(DriverTestFixture, KiwerIDOK) {
+	string expected = "ID login success\n";
+	td.setBroker("kiwer");
+	td.login("ID", "PW");
+	EXPECT_EQ(expected, getResult());
+}
+
+TEST_F(DriverTestFixture, KiwerBuyOK) {
+	string expected = "STOCK : Buy stock ( 10 * 3)\n";
+	td.setBroker("kiwer");
+	td.buy("STOCK", 10, 3);
+	EXPECT_EQ(expected, getResult());
+}
+
+TEST_F(DriverTestFixture, KiwerSellOK) {
+	string expected = "STOCK : Sell stock ( 10 * 3)\n";
+	td.setBroker("kiwer");
+	td.sell("STOCK", 10, 3);
+	EXPECT_EQ(expected, getResult());
+}
