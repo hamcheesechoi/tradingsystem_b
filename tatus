@@ -1,0 +1,25 @@
+[33mb1565a4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #8 from hamcheesechoi/driver_test
+[33m99971aa[m Merge pull request #7 from hamcheesechoi/app_impl3
+[33mf4c9abf[m[33m ([m[1;31morigin/driver_test[m[33m)[m driver test : PASS
+[33m81dfc97[m[33m ([m[1;31morigin/app_impl3[m[33m, [m[1;32mapp_impl3[m[33m)[m app test를 test fixture로 refactoring
+[33m86240fa[m Merge pull request #6 from hamcheesechoi/app_imple2
+[33m1f875a9[m[33m ([m[1;31morigin/app_imple2[m[33m)[m app test 통과 & rea
+[33md182fa4[m kiwer/nemo broker class
+[33m5e27974[m Merge pull request #5 from hamcheesechoi/app_test
+[33m0f00d82[m chore: PR 템플릿 추가
+[33m0f44fb3[m Merge pull request #4 from hamcheesechoi/app_impl
+[33me81a448[m auto_trading_system 구현
+[33m080c87d[m Merge pull request #2 from hamcheesechoi/driver_test
+[33maa24a08[m master 수정사항
+[33m41a48c0[m driver:
+[33m9257db2[m 오류 수정
+[33m7f5927b[m Merge branch 'driver_test' of https://github.com/hamcheesechoi/tradingsystem_b into driver_test
+[33m1130ff0[m driver_test tc 작성 - 필요한 driver 함수 추가 - 빌드 정상 확인 (테스트는 FAIL)
+[33m24008de[m driver: currentPrice 리턴값 오류 수정
+[33m315faa2[m Merge pull request #3 from hamcheesechoi/app_test
+[33m6bac7c6[m buy_nice_timing, sell_nice_timing 구현을 위한 unit test 4r
+[33m9b66719[m driver: driver argument
+[33m11996c9[m Merge pull request #1 from hamcheesechoi/skeleton
+[33maf6d740[m[33m ([m[1;31morigin/skeleton[m[33m)[m skele
+[33me6b8788[m 초기 커밋.
+[33m7062ff9[m .gitattributes 및 .gitignore을(를) 추가합니다.
