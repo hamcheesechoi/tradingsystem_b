@@ -1,9 +1,54 @@
 #include "gmock/gmock.h"
 #include "driver.cpp"
+#include "nemo_driver.cpp"
+#include "kiwer_driver.cpp"
+
 #include <stdexcept>
 
 using std::string;
 using namespace testing;
+
+class TestDriver : public StockerBrocker {
+public:
+	void buy(std::string stockCode, int price, int count) override {
+		stock_broker->buy(stockCode, price, count);
+
+	};
+	void sell(std::string stockCode, int price, int count) override {
+		stock_broker->sell(stockCode, price, count);
+
+	};
+	int currentPrice(std::string stockCode, int minute) override {
+		return stock_broker->currentPrice(stockCode, minute);
+	};
+	void login(std::string ID, std::string pass) override {
+		stock_broker->login(ID, pass);
+	};
+
+	/**<TEST ???꾩슂 ???⑥닔 異붽??⑸땲??>**/
+	TestDriver(string ID, string pass) : _ID(ID), _pass(pass) {}
+
+	void setStockCode(string stockCode) {
+		_stockCode = stockCode;
+	}
+
+	int getStockCount(string stockCode) {
+		return this->_count;
+	}
+
+	void setBroker(string broker_name) {
+		if (broker_name == "nemo")	stock_broker = new NemoStockerBrocker();
+		else if(broker_name == "kiwer")	stock_broker = new KiwerStockerBrocker();
+	}
+
+private:
+	string _ID; // ?댄썑 vector濡?愿由??꾩슂
+	string _pass; // ?댄썑 vector濡?愿由??꾩슂
+	string _stockCode; // ?댄썑 vector濡?愿由??꾩슂
+
+	int _count; // ?섎웾
+	StockerBrocker* stock_broker;
+};
 
 
 class DriverTestFixture : public Test {
@@ -12,6 +57,10 @@ public:
 
 	DriverTestFixture() {
 		td.setStockCode("STOCK_CODE");
+	}
+
+	void SetUp() {
+		td.setBroker("nemo");
 	}
 };
 

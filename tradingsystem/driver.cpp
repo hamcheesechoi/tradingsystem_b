@@ -29,35 +29,3 @@ class NotAvailableSellExcpetion : public exception {
 
 };
 
-class TestDriver : public StockerBrocker {
-public:
-	void buy(std::string stockCode, int price, int count) override {
-	
-	};
-	void sell(std::string stockCode, int price, int count) override {
-
-	};
-	int currentPrice(std::string stockCode, int minute) override {
-		return 0;
-	};
-	void login(std::string ID, std::string pass) override {
-
-	};
-
-	/**<TEST ???„ìš” ???¨ìˆ˜ ì¶”ê??©ë‹ˆ??>**/
-	TestDriver(string ID, string pass) : _ID(ID), _pass(pass) {}
-
-	void setStockCode(string stockCode) {
-		_stockCode = stockCode;
-	}
-
-	int getStockCount(string stockCode) {
-		return this->_count;
-	}
-private:
-	string _ID; // ?´í›„ vectorë¡?ê´€ë¦??„ìš”
-	string _pass; // ?´í›„ vectorë¡?ê´€ë¦??„ìš”
-	string _stockCode; // ?´í›„ vectorë¡?ê´€ë¦??„ìš”
-
-	int _count; // ?˜ëŸ‰
-};

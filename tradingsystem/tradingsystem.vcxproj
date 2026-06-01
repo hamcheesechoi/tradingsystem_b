@@ -147,9 +147,11 @@
     <ClCompile Include="driver_test.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="kiwer_driver.cpp" />
     <ClCompile Include="kiwer_api.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="nemo_api.cpp" />
+    <ClCompile Include="nemo_driver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
