@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{12B07A11-EFCE-51D1-1564-D28CD6653F64}</ProjectGuid>
+    <ProjectGuid>{F480327A-CC10-4128-AE00-E1395F2220B9}</ProjectGuid>
     <RootNamespace>tradingsystem</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -139,9 +139,6 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="app.cpp" />
     <ClCompile Include="app_test.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> %(AdditionalOptions)</AdditionalOptions>
@@ -153,6 +150,9 @@
     <ClCompile Include="kiwer_api.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="nemo_api.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
