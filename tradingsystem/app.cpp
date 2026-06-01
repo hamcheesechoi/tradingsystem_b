@@ -35,6 +35,13 @@ public:
     void scheduleOrder(Order& order) {
     }
 
+    void processOrders(time_t currentTime) {
+    }
+
+    int getScheduledOrderCount() {
+        return 0;
+    }
+
 private:
     StockerBrocker* broker = nullptr;
 
