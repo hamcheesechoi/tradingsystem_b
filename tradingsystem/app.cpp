@@ -5,6 +5,7 @@
 using std::string;
 
 class Order {
+public:
     string stockCode_;
     int count_;
     int budget_;
