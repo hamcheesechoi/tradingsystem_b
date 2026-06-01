@@ -143,6 +143,7 @@
     <ClCompile Include="app_test.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="schedule_test.cpp" />
     <ClCompile Include="driver.cpp" />
     <ClCompile Include="driver_test.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> %(AdditionalOptions)</AdditionalOptions>
