@@ -4,7 +4,24 @@
 #include <numeric>
 #include <algorithm>
 #include "driver.cpp"
-using std::string;
+#include <iostream>
+#include <array>
+#include <queue>
+
+using std::string, std::priority_queue;
+
+class Order {
+public:
+    string stockCode_;
+    int count_;
+    int budget_;
+    time_t time_;
+    bool is_buy;
+
+    bool operator<(const Order other) const {
+        return time_ > other.time_;
+    };
+};
 
 using PriceHistory = std::vector<int>;
 
@@ -85,6 +102,35 @@ public:
         broker->sell(stockCode, prices.back(), count);
     }
 
+    void scheduleOrder(Order order) {
+        reserved_order.push(order);
+    }
+
+    void processOrders(time_t currentTime) {
+
+        while (!reserved_order.empty() && reserved_order.top().time_ <= currentTime) {
+            time_t reserved_time = reserved_order.top().time_;
+            Order order = reserved_order.top();
+
+            int price = readPrice(order.stockCode_, currentTime);
+
+            if (order.is_buy) {
+                broker->buy(order.stockCode_, price, order.budget_ / price);
+                std::cout << "[자동 주문 : " << order.stockCode_ << " ] " << order.budget_ / price << "개 매수 완료 되었습니다." << std::endl;
+            }
+            else {
+                broker->sell(order.stockCode_, price, order.count_);
+                std::cout << "[자동 주문 : " << order.stockCode_ << " ] " << order.budget_ / price << "개 매도 완료 되었습니다." << std::endl;
+            }
+
+            reserved_order.pop();
+        }
+    }
+
+    int getScheduledOrderCount() {
+        return reserved_order.size();
+    }
+
 private:
     StockerBrocker* broker;
     RisingTrendStrategy defaultStrategy;
@@ -95,5 +141,10 @@ private:
         for (int i = 0; i < strategy->requiredHistory(); ++i)
             prices.push_back(broker->currentPrice(stockCode, 200));
         return prices;
+    }
+
+    priority_queue<Order> reserved_order;
+    int readPrice(const string& stockCode, int minutes) {
+        return broker->currentPrice(stockCode, minutes);
     }
 };
