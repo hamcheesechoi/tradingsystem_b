@@ -58,7 +58,7 @@ public:
             }
             else {
                 broker->sell(order.stockCode_, price, order.count_);
-                std::cout << "[자동 주문 : " << order.stockCode_ << " ] " << order.budget_ / price << "개 매수 완료 되었습니다." << std::endl;
+                std::cout << "[자동 주문 : " << order.stockCode_ << " ] " << order.budget_ / price << "개 매도 완료 되었습니다." << std::endl;
             }
 
             reserved_order.pop();
