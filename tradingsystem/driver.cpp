@@ -36,7 +36,7 @@ public:
 	void sell(std::string stockCode, int price, int count) override {
 
 	};
-	void currentPrice(std::string stockCode, int minute) override {
+	int currentPrice(std::string stockCode, int minute) override {
 
 	};
 	void login(std::string ID, std::string pass) override {
