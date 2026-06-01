@@ -4,6 +4,14 @@
 #include "driver.cpp"
 using std::string;
 
+class Order {
+    string stockCode_;
+    int count_;
+    int budget_;
+    time_t time_;
+    bool is_buy;
+};
+
 class auto_trading_system {
 public:
     auto_trading_system(StockerBrocker* broker) : broker(broker) {}
@@ -22,6 +30,9 @@ public:
         auto prices = readPrices(stockCode);
         if (!isDownTrend(prices)) return;
         broker->sell(stockCode, prices[2], count);
+    }
+
+    void scheduleOrder(Order& order) {
     }
 
 private:
