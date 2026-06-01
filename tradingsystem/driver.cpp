@@ -37,7 +37,7 @@ public:
 
 	};
 	int currentPrice(std::string stockCode, int minute) override {
-
+		return 0;
 	};
 	void login(std::string ID, std::string pass) override {
 
