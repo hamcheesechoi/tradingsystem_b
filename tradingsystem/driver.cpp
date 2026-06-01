@@ -1,3 +1,4 @@
+#pragma once
 #define interface struct
 
 interface StockerBrocker{
