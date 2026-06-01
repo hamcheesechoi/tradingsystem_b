@@ -3,7 +3,11 @@
 #include <string>
 #include <array>
 #include <queue>
+#include <vector>
+#include <numeric>
+#include <algorithm>
 #include "driver.cpp"
+
 
 using std::string, std::priority_queue;
 
@@ -71,18 +75,13 @@ public:
 
 private:
     StockerBrocker* broker = nullptr;
-    priority_queue<Order> reserved_order;
 
     std::array<int, 3> readPrices(const string& stockCode) {
         return {
-            readPrice(stockCode, 200),
-            readPrice(stockCode, 200),
-            readPrice(stockCode, 200)
+            broker->currentPrice(stockCode, 200),
+            broker->currentPrice(stockCode, 200),
+            broker->currentPrice(stockCode, 200)
         };
-    }
-
-    int readPrice(const string& stockCode, int minutes) {
-        return broker->currentPrice(stockCode, minutes);
     }
 
     bool isUpTrend(const std::array<int, 3>& prices) {
@@ -91,5 +90,10 @@ private:
 
     bool isDownTrend(const std::array<int, 3>& prices) {
         return prices[0] > prices[1] && prices[1] > prices[2];
+    }
+
+    priority_queue<Order> reserved_order;
+    int readPrice(const string& stockCode, int minutes) {
+        return broker->currentPrice(stockCode, minutes);
     }
 };
