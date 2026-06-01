@@ -25,28 +25,23 @@ public:
 		stock_broker->login(ID, pass);
 	};
 
-	/**<TEST ???꾩슂 ???⑥닔 異붽??⑸땲??>**/
+	/**<TEST 용 함수 작성>**/
 	TestDriver(string ID, string pass) : _ID(ID), _pass(pass) {}
 
 	void setStockCode(string stockCode) {
 		_stockCode = stockCode;
 	}
 
-	int getStockCount(string stockCode) {
-		return this->_count;
-	}
-
 	void setBroker(string broker_name) {
 		if (broker_name == "nemo")	stock_broker = new NemoStockerBrocker();
-		else if(broker_name == "kiwer")	stock_broker = new KiwerStockerBrocker();
+		else if (broker_name == "kiwer")	stock_broker = new KiwerStockerBrocker();
 	}
 
 private:
-	string _ID; // ?댄썑 vector濡?愿由??꾩슂
-	string _pass; // ?댄썑 vector濡?愿由??꾩슂
-	string _stockCode; // ?댄썑 vector濡?愿由??꾩슂
+	string _ID; // api에 전달하는 id
+	string _pass; // api에 전달하는 password
+	string _stockCode; // api에 전달하는 stock code
 
-	int _count; // ?섎웾
 	StockerBrocker* stock_broker;
 };
 
@@ -71,7 +66,7 @@ public:
 TEST_F(DriverTestFixture, IDError) {
 	string id = "ERROR_ID";
 	string password = "ERROR_PW";
-	
+
 	EXPECT_THROW(td.login(id, password), IdExcpetion) << "ID Error";
 }
 
@@ -80,7 +75,7 @@ TEST_F(DriverTestFixture, IDError) {
 TEST_F(DriverTestFixture, PWError) {
 	string id = "ID";
 	string password = "ERROR_PW";
-	
+
 	EXPECT_THROW(td.login(id, password), PwExcpetion) << "PW Error";
 }
 
@@ -95,33 +90,3 @@ TEST_F(DriverTestFixture, StockError) {
 	EXPECT_THROW(td.sell(stockCode, price, count), StockExcpetion) << "Stock Error";
 	EXPECT_THROW(td.currentPrice(stockCode, munute), StockExcpetion) << "Stock Error";
 }
-
-/*
-// 4. stock 잔여량 에러
-TEST_F(DriverTestFixture, RemainStockError) {
-
-	string stockCode = "STOCK_CODE";
-	td.buy(stockCode, 0, 3);
-
-	EXPECT_THROW(td.sell(stockCode, 0, 4), NotAvailableSellExcpetion);
-}
-
-
-// <Success Case>
-// 1. sell
-TEST_F(DriverTestFixture, sellSuccess) {
-	string stockCode = "STOCK_CODE";
-	td.buy(stockCode, 0, 3);
-
-	td.sell(stockCode, 0, 2);
-
-	EXPECT_EQ(td.getStockCount(stockCode), 1);
-}
-
-// 2. current Price (app test 개발 후 테스트 필요)
-TEST_F(DriverTestFixture, sellSuccess) {
-	string stockCode = "STOCK_CODE";
-
-	EXPECT_EQ(td.currentPrice(stockCode, 3), 200);
-}
-*/
