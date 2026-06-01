@@ -1,8 +1,11 @@
 #pragma once
+#include <iostream>
 #include <string>
 #include <array>
+#include <queue>
 #include "driver.cpp"
-using std::string;
+
+using std::string, std::priority_queue;
 
 class Order {
 public:
@@ -11,6 +14,10 @@ public:
     int budget_;
     time_t time_;
     bool is_buy;
+
+    bool operator<(const Order other) const {
+        return time_ > other.time_;
+    };
 };
 
 class auto_trading_system {
@@ -33,25 +40,49 @@ public:
         broker->sell(stockCode, prices[2], count);
     }
 
-    void scheduleOrder(Order& order) {
+    void scheduleOrder(Order order) {
+        reserved_order.push(order);
     }
 
     void processOrders(time_t currentTime) {
+
+        while (!reserved_order.empty() && reserved_order.top().time_ <= currentTime) {
+            time_t reserved_time = reserved_order.top().time_;
+            Order order = reserved_order.top();
+
+            int price = readPrice(order.stockCode_, currentTime);
+
+            if (order.is_buy) {
+                broker->buy(order.stockCode_, price, order.budget_ / price);
+                std::cout << "[자동 주문 : " << order.stockCode_ << " ] " << order.budget_ / price << "개 매수 완료 되었습니다." << std::endl;
+            }
+            else {
+                broker->sell(order.stockCode_, price, order.count_);
+                std::cout << "[자동 주문 : " << order.stockCode_ << " ] " << order.budget_ / price << "개 매수 완료 되었습니다." << std::endl;
+            }
+
+            reserved_order.pop();
+        }
     }
 
     int getScheduledOrderCount() {
-        return 0;
+        return reserved_order.size();
     }
 
 private:
     StockerBrocker* broker = nullptr;
+    priority_queue<Order> reserved_order;
 
     std::array<int, 3> readPrices(const string& stockCode) {
         return {
-            broker->currentPrice(stockCode, 200),
-            broker->currentPrice(stockCode, 200),
-            broker->currentPrice(stockCode, 200)
+            readPrice(stockCode, 200),
+            readPrice(stockCode, 200),
+            readPrice(stockCode, 200)
         };
+    }
+
+    int readPrice(const string& stockCode, int minutes) {
+        return broker->currentPrice(stockCode, minutes);
     }
 
     bool isUpTrend(const std::array<int, 3>& prices) {

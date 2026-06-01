@@ -53,7 +53,7 @@ TEST_F(AppScheduleTest, OrderNotExecutedBeforeScheduledTime) {
 }
 
 TEST_F(AppScheduleTest, BuyOrderExecutedAtScheduledTime) {
-    EXPECT_CALL(mock, currentPrice(stockCode, 0)).WillOnce(Return(5000));
+    EXPECT_CALL(mock, currentPrice(stockCode, _)).WillOnce(Return(5000));
     EXPECT_CALL(mock, buy(stockCode, 5000, 20)).Times(1);
     app.scheduleOrder(MakeBuyOrder(stockCode, 100000, baseTime));
     time_t at = baseTime;
@@ -62,7 +62,7 @@ TEST_F(AppScheduleTest, BuyOrderExecutedAtScheduledTime) {
 }
 
 TEST_F(AppScheduleTest, SellOrderExecutedAtScheduledTime) {
-    EXPECT_CALL(mock, currentPrice(stockCode, 0)).WillOnce(Return(5000));
+    EXPECT_CALL(mock, currentPrice(stockCode, _)).WillOnce(Return(5000));
     EXPECT_CALL(mock, sell(stockCode, 5000, 10)).Times(1);
     app.scheduleOrder(MakeSellOrder(stockCode, 10, baseTime));
     time_t at = baseTime;
@@ -71,7 +71,7 @@ TEST_F(AppScheduleTest, SellOrderExecutedAtScheduledTime) {
 }
 
 TEST_F(AppScheduleTest, OrderExecutedAfterScheduledTime) {
-    EXPECT_CALL(mock, currentPrice(stockCode, 0)).WillOnce(Return(5000));
+    EXPECT_CALL(mock, currentPrice(stockCode, _)).WillOnce(Return(5000));
     EXPECT_CALL(mock, buy(stockCode, 5000, 20)).Times(1);
     app.scheduleOrder(MakeBuyOrder(stockCode, 100000, baseTime));
     time_t after = baseTime + 500;
@@ -84,14 +84,14 @@ TEST_F(AppScheduleTest, MultipleOrdersExecuteAtRespectiveTimes) {
     app.scheduleOrder(MakeSellOrder(stockCode, 10, baseTime + 100));
     EXPECT_EQ(app.getScheduledOrderCount(), 2);
 
-    EXPECT_CALL(mock, currentPrice(stockCode, 0)).WillOnce(Return(5000));
+    EXPECT_CALL(mock, currentPrice(stockCode, _)).WillOnce(Return(5000));
     EXPECT_CALL(mock, buy(stockCode, 5000, 20)).Times(1);
     EXPECT_CALL(mock, sell(_, _, _)).Times(0);
     time_t t1 = baseTime;
     app.processOrders(t1);
     EXPECT_EQ(app.getScheduledOrderCount(), 1);
 
-    EXPECT_CALL(mock, currentPrice(stockCode, 0)).WillOnce(Return(5200));
+    EXPECT_CALL(mock, currentPrice(stockCode, _)).WillOnce(Return(5200));
     EXPECT_CALL(mock, sell(stockCode, 5200, 10)).Times(1);
     time_t t2 = baseTime + 100;
     app.processOrders(t2);
