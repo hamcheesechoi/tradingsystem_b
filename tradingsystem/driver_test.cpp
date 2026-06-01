@@ -60,9 +60,24 @@ public:
 	}
 
 	void SetUp() {
+		oldCoutStreamBuf = std::cout.rdbuf();
+		std::cout.rdbuf(oss.rdbuf()); // 새로운 버퍼로 redirection
+
 		td.setBroker("nemo");
 		// td.setBroker("kiwer");
 	}
+
+	void TearDown() {
+		std::cout.rdbuf(oldCoutStreamBuf); //복원
+	}
+
+	string getResult() {
+		return oss.str();
+	}
+
+protected:
+	std::ostringstream oss;
+	std::streambuf* oldCoutStreamBuf;
 };
 
 
@@ -125,3 +140,24 @@ TEST_F(DriverTestFixture, sellSuccess) {
 	EXPECT_EQ(td.currentPrice(stockCode, 3), 200);
 }
 */
+
+TEST_F(DriverTestFixture, NemoIDOK) {
+	string expected = "[NEMO]ID login GOOD\n";
+	td.setBroker("nemo");
+	td.login("ID", "PW");
+	EXPECT_EQ(expected, getResult());
+}
+
+TEST_F(DriverTestFixture, NemoBuyOK) {
+	string expected = "[NEMO]STOCK buy stock ( price : 10 ) * ( count : 3)\n";
+	td.setBroker("nemo");
+	td.buy("STOCK", 10, 3);
+	EXPECT_EQ(expected, getResult());
+}
+
+TEST_F(DriverTestFixture, NemoSellOK) {
+	string expected = "[NEMO]STOCK sell stock ( price : 10 ) * ( count : 3)\n";
+	td.setBroker("nemo");
+	td.sell("STOCK", 10, 3);
+	EXPECT_EQ(expected, getResult());
+}
