@@ -125,3 +125,75 @@ TEST_F(DriverTestFixture, sellSuccess) {
 	EXPECT_EQ(td.currentPrice(stockCode, 3), 200);
 }
 */
+
+// ===================== KiwerAPI Unit Test =====================
+#include "kiwer_api.cpp"
+
+class CoutCapture {
+public:
+	CoutCapture() : old(std::cout.rdbuf(buffer.rdbuf())) {}
+	~CoutCapture() { std::cout.rdbuf(old); }
+	std::string str() { return buffer.str(); }
+private:
+	std::stringstream buffer;
+	std::streambuf* old;
+};
+
+TEST(KiwerAPI, Login) {
+	KiwerAPI kiwer;
+	CoutCapture cap;
+	kiwer.login("testUser", "password");
+	EXPECT_EQ(cap.str(), "testUser login success\n");
+}
+
+TEST(KiwerAPI, Buy) {
+	KiwerAPI kiwer;
+	CoutCapture cap;
+	kiwer.buy("005930", 10, 5000);
+	EXPECT_EQ(cap.str(), "005930 : Buy stock ( 5000 * 10)\n");
+}
+
+TEST(KiwerAPI, Sell) {
+	KiwerAPI kiwer;
+	CoutCapture cap;
+	kiwer.sell("005930", 10, 5000);
+	EXPECT_EQ(cap.str(), "005930 : Sell stock ( 5000 * 10)\n");
+}
+
+TEST(KiwerAPI, CurrentPrice) {
+	KiwerAPI kiwer;
+	int price = kiwer.currentPrice("005930");
+	EXPECT_GE(price, 5000);
+	EXPECT_LE(price, 5900);
+}
+
+// ===================== NemoAPI Unit Test =====================
+#include "nemo_api.cpp"
+
+TEST(NemoAPI, Certification) {
+	NemoAPI nemo;
+	CoutCapture cap;
+	nemo.certification("testUser", "password");
+	EXPECT_EQ(cap.str(), "[NEMO]testUser login GOOD\n");
+}
+
+TEST(NemoAPI, PurchasingStock) {
+	NemoAPI nemo;
+	CoutCapture cap;
+	nemo.purchasingStock("005930", 5000, 10);
+	EXPECT_EQ(cap.str(), "[NEMO]005930 buy stock ( price : 5000 ) * ( count : 10)\n");
+}
+
+TEST(NemoAPI, SellingStock) {
+	NemoAPI nemo;
+	CoutCapture cap;
+	nemo.sellingStock("005930", 5000, 10);
+	EXPECT_EQ(cap.str(), "[NEMO]005930 sell stock ( price : 5000 ) * ( count : 10)\n");
+}
+
+TEST(NemoAPI, GetMarketPrice) {
+	NemoAPI nemo;
+	int price = nemo.getMarketPrice("005930", 1);
+	EXPECT_GE(price, 5000);
+	EXPECT_LE(price, 5900);
+}
